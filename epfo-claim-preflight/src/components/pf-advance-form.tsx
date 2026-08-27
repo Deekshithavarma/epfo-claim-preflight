@@ -2,7 +2,7 @@
 
 import { AppShell } from "@/components/app-shell";
 import { SubmitSuccessModal } from "@/components/submit-success-modal";
-import { loadFormDraft, saveFormDraft } from "@/lib/form-draft";
+import { clearFormDraft, loadFormDraft, saveFormDraft } from "@/lib/form-draft";
 import { ChevronDown, Pencil } from "lucide-react";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,14 @@ const PURPOSE_OPTIONS = [
 
 const ELIGIBLE_AMOUNT = 11113;
 const MASKED_MOBILE = "***98XXXX12";
+const DEFAULT_ADDRESS = {
+  locality: "Sector 14",
+  street: "Plot 22, Palm Beach Road",
+  state: "Maharashtra",
+  district: "Thane",
+  city: "Navi Mumbai",
+  pin: "400703",
+};
 
 const selectClassName =
   "w-full appearance-none rounded-md border border-[#c8d2e0] bg-white px-3 py-2 pr-10 text-[0.98rem] text-[#2d3b4f] shadow-sm outline-none focus:border-[#0e8e8e]";
@@ -121,14 +129,7 @@ export function PfAdvanceForm() {
   const [purpose, setPurpose] = useState("");
   const [amount, setAmount] = useState("");
   const [editingAddress, setEditingAddress] = useState(false);
-  const [address, setAddress] = useState({
-    locality: "Sector 14",
-    street: "Plot 22, Palm Beach Road",
-    state: "Maharashtra",
-    district: "Thane",
-    city: "Navi Mumbai",
-    pin: "400703",
-  });
+  const [address, setAddress] = useState(DEFAULT_ADDRESS);
   const [consent, setConsent] = useState(true);
   const [otp, setOtp] = useState("");
   const [resendIn, setResendIn] = useState(55);
@@ -233,11 +234,26 @@ export function PfAdvanceForm() {
 
       const data = (await response.json()) as { claimId: string };
       setSubmittedClaimId(data.claimId);
+      resetFormToStart();
     } catch {
       setError("Could not start claim. Please try again.");
     } finally {
       setSubmitting(false);
     }
+  }
+
+  function resetFormToStart() {
+    clearFormDraft();
+    setClaimOption("");
+    setService("");
+    setPurpose("");
+    setAmount("");
+    setEditingAddress(false);
+    setAddress(DEFAULT_ADDRESS);
+    setConsent(true);
+    setOtp("");
+    setResendIn(55);
+    setError(null);
   }
 
   async function onCheckEligibility() {

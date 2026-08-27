@@ -31,3 +31,7 @@ export function loadFormDraft(): FormDraft | null {
     return null;
   }
 }
+
+export function clearFormDraft() {
+  window.sessionStorage.removeItem(FORM_DRAFT_KEY);
+}
