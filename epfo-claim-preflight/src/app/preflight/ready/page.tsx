@@ -38,11 +38,8 @@ function ReadyPageContent() {
           Checks passed: {claim ? `${claim.checksPassed}/${claim.checksTotal}` : "..."}
         </p>
         {claimId ? (
-          <Link
-            href={`/claim/review?claimId=${claimId}`}
-            className="gov-primary-btn"
-          >
-            Review claim
+          <Link href="/online-services" className="gov-primary-btn">
+            Back to Online Services
           </Link>
         ) : null}
       </section>

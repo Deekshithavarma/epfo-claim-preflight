@@ -1,78 +1,78 @@
-# ClaimReady - EPFO Claim Preflight (Demo)
+# ClaimReady — EPFO Form 31 Preflight Demo
 
-ClaimReady is a citizen-facing prototype that helps a member check claim readiness before submission.
+A citizen-facing prototype of the EPFO Unified Portal **Online Services** flow. A member logs in (demo), fills PF Advance (Form 31), can run a **Check Eligibility** preflight, and can **Validate OTP and Submit Claim** to see a success popup. Everything uses synthetic data. Nothing talks to live EPFO systems.
 
-## Demo Promise
-
-- Uses synthetic users and synthetic claim/KYC/bank state.
-- Does not access live EPFO systems.
-- Does not submit real claims or handle OTP/payments.
-- Deterministic rules decide readiness; AI explains.
-
-## Stack
-
-- Next.js (App Router) + TypeScript
-- Tailwind CSS
-- API routes for deterministic preflight
-- Optional OpenAI API integration for intent/explanations
-
-## Main Journey
-
-1. `/demo`
-2. `/claim/purpose`
-3. `/claim/amount`
-4. `/preflight`
-5. `/preflight/results`
-6. `/preflight/check/[code]`
-7. `/preflight/ready`
-8. `/claim/review`
-9. `/claim/success`
-
-## API Routes
-
-- `POST /api/claim/intake`
-- `POST /api/preflight`
-- `POST /api/preflight/recheck`
-- `POST /api/demo/fix`
-- `POST /api/claim/prepare`
-- `GET /api/claim/[claimId]`
-- `POST /api/ai/intent`
-- `POST /api/ai/explain`
-
-## Setup
-
-1. Install Node.js 20+ and npm.
-2. From project root run:
+## How to run
 
 ```bash
+cd epfo-claim-preflight
 npm install
 npm run dev
 ```
 
-3. Open `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000). You land on Member Login; any credentials work. After login you are sent to `/online-services`.
 
-## Environment
+## What the app does today
 
-Create `.env.local` from `.env.example`:
+1. **Login** (`/login`) — demo gate stored in `localStorage`.
+2. **Online Services** (`/online-services`) — Form 31: claim type, member ID, purpose, amount, address, Aadhaar consent, OTP.
+3. **Check Eligibility** — creates a demo claim, runs in-memory preflight, shows blockers and demo “fix” actions.
+4. **Validate OTP and Submit Claim** — success popup, then the form resets to the empty claim-type selector.
+5. **Portal chrome** — Home / View / Manage / Account / PMVBRY and A+/EN are “Coming soon” placeholders so the header matches the real portal.
 
-```bash
-OPENAI_API_KEY=
-```
+## Tech stack checklist
 
-If no API key is set, AI routes use deterministic fallback behavior.
+| Layer | Choice | Why |
+| --- | --- | --- |
+| Runtime | Node.js 20+ | Next.js App Router requirement |
+| Framework | Next.js (App Router) | Pages, layouts, and API routes in one app |
+| Language | TypeScript | Typed claim records, check statuses, form draft |
+| UI | React 18 | Client forms, OTP timer, success modal |
+| Styling | Tailwind CSS 3 + `globals.css` | Portal colors, nav strip, form grid |
+| Icons | lucide-react | Header nav and modal icons |
+| Images | `next/image` | EPFO emblem in header/login |
+| State | React state + `sessionStorage` / `localStorage` | Form draft and demo login; no database |
+| Backend | Next.js Route Handlers (`src/app/api`) | Claim intake and preflight on the same host |
+| Rules engine | `src/lib/preflight.ts` | Deterministic checks (UAN, KYC, bank, profile, purpose, amount) |
+| Demo data | `src/lib/demo-store.ts` | In-memory Map of claims; resets when the server restarts |
+| Deploy | Vercel | Static/SSR Next app; set Root Directory to `epfo-claim-preflight` |
 
-## Rule Source Honesty
+No OpenAI key, no database, no live UAN/OTP/UIDAI integration.
 
-This prototype includes `sourceType` fields:
+## How this was built
 
-- `official_rule`
-- `prototype_rule`
-- `mock_state`
+1. **Portal clone first** — Match Unified Portal header, teal nav, and Form 31 layout so the demo feels like the real site.
+2. **Demo auth** — Login is a front door only; it does not validate UAN/password.
+3. **One primary form** — Purpose, amount, and OTP live on Online Services instead of a separate wizard.
+4. **Preflight as eligibility** — Check Eligibility POSTs `/api/claim/intake`, then `/api/preflight`. Results and per-check pages use the same in-memory claim.
+5. **Submit is local UX** — OTP is any 6 digits. Success is a modal. Draft is cleared so the member is back on “Select Claim Option”.
+6. **Honest mock rules** — Each check has `sourceType`: `mock_state` or `prototype_rule`. This is not official EPFO scoring.
 
-For production, each official rule must be mapped to exact EPFO source URL and date.
+## Remaining routes
 
-## Non-goals
+**Member flow:** `/login` → `/online-services` → `/preflight` → `/preflight/results` → `/preflight/check/[code]` → `/preflight/ready`
+
+**APIs:** `POST /api/claim/intake`, `GET /api/claim/[claimId]`, `POST /api/preflight`, `POST /api/preflight/recheck`, `POST /api/demo/fix`
+
+**Placeholders:** `/demo`, `/view`, `/manage`, `/account`, `/pmvbry`, `/aadhaar-verified-services`, `/utilities/font-increase`, `/utilities/language`
+
+## Future enhancements
+
+- **Live EPFO / UAN APIs** — Real KYC, bank seeding, and claim status instead of in-memory mocks.
+- **Real Aadhaar OTP** — UIDAI/eNPS-style auth; drop the “any 6 digits” demo.
+- **Persistent store** — Postgres or similar so claims survive server restart and can be listed under View/Manage.
+- **Eligibility rules from official circulars** — Map each check to an EPFO URL, date, and Form 31 clause; store `official_rule` with citations.
+- **Amount vs eligible balance** — Compute admissible advance from service, purpose, and contribution history.
+- **PDF acknowledgement** — Generate a real receipt for “CLICK HERE to view pdf” instead of jumping to preflight.
+- **Hindi / accessibility** — Wire EN and A+ to language and font size instead of Coming soon pages.
+- **Fill remaining portal tabs** — Home, View, Manage, Account, PMVBRY as real sections, not placeholders.
+- **Multi-user demo profiles** — Switch members (blocked KYC, ready bank, pensioner) without code changes.
+- **Audit log** — Timestamped trail of eligibility checks and submit attempts for hackathon judging.
+- **Tests** — Unit tests for `runPreflight`, plus Playwright for login → Form 31 → OTP → reset.
+- **AI copilot (optional)** — Explain a failed check in plain language; keep rules deterministic, LLM as explanation only.
+
+## Non-goals (still true)
 
 - No live EPFO integration
 - No real identity verification
-- No predictive approval scoring
+- No predictive “will this be approved” score

@@ -3,8 +3,6 @@ import Link from "next/link";
 
 interface PortalDummyPageProps {
   title?: string;
-  subtitle?: string;
-  points?: string[];
 }
 
 export function PortalDummyPage({ title }: PortalDummyPageProps) {

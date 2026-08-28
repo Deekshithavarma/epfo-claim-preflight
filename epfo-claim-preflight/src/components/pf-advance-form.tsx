@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 
 const CLAIM_OPTIONS = [
   { value: "", label: "------- Select Claim Option -------" },
-  { value: "form-19", label: "PF FINAL SETTLEMENT (FORM-19)" },
-  { value: "form-10c", label: "PENSION WITHDRAWAL BENEFIT (FORM-10C)" },
+  { value: "form-19", label: "PF FINAL SETTLEMENT (FORM-19)", disabled: true },
+  { value: "form-10c", label: "PENSION WITHDRAWAL BENEFIT (FORM-10C)", disabled: true },
   { value: "form-31", label: "PF ADVANCE (FORM-31)" },
 ] as const;
 
@@ -73,7 +73,7 @@ function SelectField({
   ariaLabel: string;
   value: string;
   onChange: (value: string) => void;
-  options: readonly { value: string; label: string }[];
+  options: readonly { value: string; label: string; disabled?: boolean }[];
   widthClassName?: string;
 }) {
   return (
@@ -85,7 +85,11 @@ function SelectField({
         className={selectClassName}
       >
         {options.map((option) => (
-          <option key={option.value || option.label} value={option.value} disabled={option.value === ""}>
+          <option
+            key={option.value || option.label}
+            value={option.value}
+            disabled={option.disabled || option.value === ""}
+          >
             {option.label}
           </option>
         ))}
@@ -145,10 +149,11 @@ export function PfAdvanceForm() {
   useEffect(() => {
     const draft = loadFormDraft();
     if (draft) {
-      setClaimOption(draft.claimOption);
+      const claimOption = draft.claimOption === "form-31" ? draft.claimOption : "";
+      setClaimOption(claimOption);
       setService(draft.service);
-      setPurpose(draft.purpose);
-      setAmount(draft.amount);
+      setPurpose(claimOption === "form-31" ? draft.purpose : "");
+      setAmount(claimOption === "form-31" ? draft.amount : "");
       setAddress(draft.address);
       setConsent(draft.consent);
     }

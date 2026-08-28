@@ -26,7 +26,7 @@ export function AppShell({
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4">
             <div className="flex items-center gap-3">
               <div className="gov-logo-wrap" aria-hidden="true">
-                <Image src="/assets/epfo-logo.jpeg" alt="ClaimReady emblem" width={56} height={56} className="gov-logo-image" priority />
+                <Image src="/assets/epfo-logo.jpeg" alt="EPFO emblem" width={56} height={56} className="gov-logo-image" priority />
               </div>
               <div>
                 <p className="text-[1.6rem] font-bold leading-tight text-[#0e8e8e]">EMPLOYEES' PROVIDENT FUND ORGANISATION, INDIA</p>
@@ -49,12 +49,6 @@ export function AppShell({
           <nav className="gov-nav">
             <GovNav />
           </nav>
-        </div>
-
-        <div className="hidden">
-          <Link href="/demo" className="text-[2rem] font-semibold leading-tight text-[#2e3192]">
-            Employees' Provident Fund Organisation
-          </Link>
         </div>
       </header>
 

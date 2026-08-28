@@ -46,8 +46,8 @@ function PreflightResultsPageContent() {
   if (!claimId) {
     return (
       <AppShell title="Missing claim" subtitle="Start a demo claim first.">
-        <Link className="text-brand" href="/claim/purpose">
-          Start claim
+        <Link className="text-brand" href="/online-services">
+          Back to Online Services
         </Link>
       </AppShell>
     );

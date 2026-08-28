@@ -28,7 +28,7 @@ export interface ClaimRecord {
   userId: string;
   purpose: string;
   amount: number;
-  demoStatus: "draft" | "ready" | "prepared";
+  demoStatus: "draft" | "ready";
   createdAt: string;
   demoState: {
     bankVerified: boolean;

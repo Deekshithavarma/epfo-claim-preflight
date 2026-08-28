@@ -3,8 +3,8 @@ import { AuthGate } from "@/components/auth-gate";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ClaimReady - EPFO Claim Preflight",
-  description: "Check your EPFO claim readiness in demo mode before submission.",
+  title: "EPFO Claim Preflight (Demo)",
+  description: "Demo Unified Portal flow for EPFO Form 31 with synthetic preflight checks.",
 };
 
 export default function RootLayout({

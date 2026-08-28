@@ -20,7 +20,7 @@ function PreflightPageContent() {
 
   useEffect(() => {
     if (!claimId) {
-      router.push("/claim/purpose");
+      router.push("/online-services");
       return;
     }
 

@@ -55,10 +55,6 @@ export function updateClaim(claimId: string, updater: (record: ClaimRecord) => C
   return updated;
 }
 
-export function setClaimPrepared(claimId: string): ClaimRecord | null {
-  return updateClaim(claimId, (record) => ({ ...record, demoStatus: "prepared" }));
-}
-
 export function applyDemoFix(claimId: string, fix: string): ClaimRecord | null {
   return updateClaim(claimId, (record) => {
     if (fix === "verify_bank") {
