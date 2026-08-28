@@ -40,7 +40,7 @@ const DEFAULT_ADDRESS = {
 };
 
 const selectClassName =
-  "w-full appearance-none rounded-md border border-[#c8d2e0] bg-white px-3 py-2 pr-10 text-[0.98rem] text-[#2d3b4f] shadow-sm outline-none focus:border-[#0e8e8e]";
+  "min-h-11 w-full appearance-none rounded-md border border-[#c8d2e0] bg-white px-3 py-2 pr-10 text-base text-[#2d3b4f] shadow-sm outline-none focus:border-[#0e8e8e]";
 
 function FormRow({
   label,
@@ -54,11 +54,11 @@ function FormRow({
   children: ReactNode;
 }) {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-[minmax(220px,40%)_minmax(0,1fr)] ${last ? "" : "border-b border-slate-200"}`}>
-      <div className="border-slate-200 bg-[#fbfcfe] px-5 py-4 text-[1.02rem] font-semibold text-[#2f3a4d] md:border-r">
+    <div className={`grid grid-cols-1 md:grid-cols-[minmax(180px,40%)_minmax(0,1fr)] ${last ? "" : "border-b border-slate-200"}`}>
+      <div className="border-slate-200 bg-[#fbfcfe] px-3 py-3 text-[0.95rem] font-semibold leading-snug text-[#2f3a4d] sm:px-5 sm:py-4 sm:text-[1.02rem] md:border-r">
         {label} {required ? <span className="text-red-600">*</span> : null}
       </div>
-      <div className="min-w-0 px-4 py-3">{children}</div>
+      <div className="min-w-0 px-3 py-3 sm:px-4">{children}</div>
     </div>
   );
 }
@@ -68,7 +68,7 @@ function SelectField({
   value,
   onChange,
   options,
-  widthClassName = "max-w-[300px]",
+  widthClassName = "max-w-full sm:max-w-[300px]",
 }: {
   ariaLabel: string;
   value: string;
@@ -111,13 +111,13 @@ function AddressValue({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="grid grid-cols-[5.75rem_minmax(0,1fr)] items-center gap-x-2 text-[0.95rem] leading-6">
-      <span className="whitespace-nowrap font-semibold text-[#2f3a4d]">{label} :</span>
+    <div className="grid grid-cols-1 gap-1 text-[0.95rem] leading-6 sm:grid-cols-[5.75rem_minmax(0,1fr)] sm:items-center sm:gap-x-2">
+      <span className="font-semibold text-[#2f3a4d]">{label} :</span>
       {editing ? (
         <input
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-8 w-full min-w-0 rounded-md border border-[#c8d2e0] bg-white px-2 py-1 text-[#2d3b4f] outline-none focus:border-[#0e8e8e]"
+          className="h-11 w-full min-w-0 rounded-md border border-[#c8d2e0] bg-white px-2 py-1 text-base text-[#2d3b4f] outline-none focus:border-[#0e8e8e]"
         />
       ) : (
         <span className="min-w-0 break-words text-[#2d3b4f]">{value}</span>
@@ -311,10 +311,10 @@ export function PfAdvanceForm() {
 
   return (
     <AppShell contentWidth="wide" showTitleCard={false}>
-      <form onSubmit={onSubmitClaim} className="mx-auto mt-2 w-full max-w-5xl rounded-2xl bg-white p-3 shadow-[0_12px_30px_rgba(15,37,64,0.14)]">
+      <form onSubmit={onSubmitClaim} className="mx-auto mt-1 w-full max-w-5xl overflow-hidden rounded-2xl bg-white p-2 shadow-[0_12px_30px_rgba(15,37,64,0.14)] sm:mt-2 sm:p-3">
         <div className="h-10 rounded-t-xl bg-[#0e8e8e]" />
 
-        <section className="rounded-b-xl border border-slate-200 bg-white p-2.5">
+        <section className="rounded-b-xl border border-slate-200 bg-white p-1.5 sm:p-2.5">
           <div className="overflow-hidden rounded-xl border border-slate-200">
             <FormRow label="मैं आवेदन करना चाहता हूँ / I want to apply for" required>
               <SelectField
@@ -347,7 +347,7 @@ export function PfAdvanceForm() {
                 value={service}
                 onChange={setService}
                 options={SERVICE_OPTIONS}
-                widthClassName="max-w-[340px]"
+                widthClassName="max-w-full sm:max-w-[340px]"
               />
             </FormRow>
 
@@ -369,7 +369,7 @@ export function PfAdvanceForm() {
                     min={1}
                     value={amount}
                     onChange={(event) => setAmount(event.target.value)}
-                    className="w-full max-w-[140px] rounded-md border border-[#c8d2e0] bg-white px-3 py-2 text-[0.98rem] text-[#2d3b4f] shadow-sm outline-none focus:border-[#0e8e8e]"
+                    className="min-h-11 w-full max-w-full rounded-md border border-[#c8d2e0] bg-white px-3 py-2 text-base text-[#2d3b4f] shadow-sm outline-none focus:border-[#0e8e8e] sm:max-w-[140px]"
                   />
                   <p className="mt-2 text-[0.92rem] italic text-[#1b7a3a]">
                     Eligible Claim Amount: Rs {ELIGIBLE_AMOUNT.toLocaleString("en-IN")}/- (Amount subject to change during
@@ -378,7 +378,7 @@ export function PfAdvanceForm() {
                 </FormRow>
 
                 <FormRow label="कर्मचारी का पता / Employee's address" required last>
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-2 sm:gap-3">
                     <div className="grid min-w-0 flex-1 grid-cols-1 gap-x-8 gap-y-2 lg:grid-cols-2">
                       <AddressValue
                         label="Locality"
@@ -421,7 +421,7 @@ export function PfAdvanceForm() {
                       type="button"
                       aria-label={editingAddress ? "Done editing address" : "Edit address"}
                       onClick={() => setEditingAddress((current) => !current)}
-                      className="mt-0.5 shrink-0 text-[#0f7fbd]"
+                      className="mt-0.5 min-h-11 min-w-11 shrink-0 text-[#0f7fbd]"
                     >
                       <Pencil size={16} />
                     </button>
@@ -433,19 +433,19 @@ export function PfAdvanceForm() {
 
           {showForm31Fields ? (
             <>
-              <p className="border-b border-slate-200 px-2 py-4 text-[0.9rem] font-bold italic leading-6 text-[#1d2b3c]">
+              <p className="border-b border-slate-200 px-2 py-4 text-[0.82rem] font-bold italic leading-6 text-[#1d2b3c] sm:text-[0.9rem]">
                 *Certified that the particulars are true to the best of my knowledge, I certify that I have gone through the data
                 seeded in UAN portal and found all data, including Form No 11 (New), Bank Account details and Aadhaar number to be
                 correct. Please make the payment in the bank account mentioned in the UAN Portal. In case the amount is used for any
                 purpose other than stated above, I am liable to return the entire amount with penal interest.
               </p>
 
-              <label className="flex items-start gap-3 border-b border-slate-200 px-2 py-4 text-[0.88rem] leading-6 text-[#2d3b4f]">
+              <label className="flex items-start gap-3 border-b border-slate-200 px-2 py-4 text-[0.82rem] leading-6 text-[#2d3b4f] sm:text-[0.88rem]">
                 <input
                   type="checkbox"
                   checked={consent}
                   onChange={(event) => setConsent(event.target.checked)}
-                  className="mt-1 h-4 w-4 accent-[#1d6fd4]"
+                  className="mt-1 h-5 w-5 shrink-0 accent-[#1d6fd4]"
                 />
                 <span>
                   मैं अपनी पहचान स्थापित करने और ऑनलाइन दावा प्रस्तुत करने के उद्देश्य से आधार आधारित प्रमाणीकरण के लिए अपना आधार नंबर,
@@ -455,19 +455,19 @@ export function PfAdvanceForm() {
                 </span>
               </label>
 
-              <div className="flex flex-col items-center gap-3 px-2 py-6 text-center">
-                <p className="text-[0.95rem] font-bold text-[#1b7a3a]">
+              <div className="flex flex-col items-stretch gap-3 px-2 py-6 text-center sm:items-center">
+                <p className="text-[0.9rem] font-bold leading-snug text-[#1b7a3a] sm:text-[0.95rem]">
                   SUCCESS: OTP has been sent on Mobile Number {MASKED_MOBILE} (UIDAI)
                 </p>
                 <button
                   type="button"
                   disabled={resendIn > 0}
                   onClick={() => setResendIn(55)}
-                  className="rounded-md bg-[#5aa0e6] px-4 py-2 text-sm font-semibold text-white disabled:opacity-80"
+                  className="min-h-11 rounded-md bg-[#5aa0e6] px-4 py-2 text-sm font-semibold text-white disabled:opacity-80 sm:self-center"
                 >
                   {resendIn > 0 ? `Resend OTP in ${resendIn}s` : "Resend OTP"}
                 </button>
-                <div className="mt-1 flex flex-wrap items-center justify-center gap-3">
+                <div className="mt-1 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
                   <span className="text-[0.98rem] font-semibold text-[#2f3a4d]">
                     Enter OTP <span className="text-red-600">*</span>
                   </span>
@@ -478,26 +478,26 @@ export function PfAdvanceForm() {
                     value={otp}
                     onChange={(event) => setOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
                     placeholder="Enter 6 digit aadhaar OTP"
-                    className="w-[240px] rounded-md border border-[#c8d2e0] bg-white px-3 py-2 text-[0.95rem] text-[#2d3b4f] shadow-sm outline-none placeholder:text-[#8a96a8] focus:border-[#1d6fd4]"
+                    className="min-h-11 w-full rounded-md border border-[#c8d2e0] bg-white px-3 py-2 text-base text-[#2d3b4f] shadow-sm outline-none placeholder:text-[#8a96a8] focus:border-[#1d6fd4] sm:w-[240px]"
                   />
-                  <span className="max-w-[280px] text-left text-xs italic text-[#617086]">
+                  <span className="max-w-full text-left text-xs italic text-[#617086] sm:max-w-[280px]">
                     For Demo purpose enter any 6 digit number to continue
                   </span>
                 </div>
-                {error ? <p className="mt-3 text-sm font-semibold text-red-700">{error}</p> : null}
+                {error ? <p className="mt-3 break-words text-sm font-semibold text-red-700">{error}</p> : null}
                 <div className="mt-4 flex w-full max-w-3xl flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
                   <button
                     type="button"
                     disabled={submitting || checkingEligibility}
                     onClick={() => void onCheckEligibility()}
-                    className="rounded-md bg-[#1e4f9a] px-6 py-2.5 text-[0.98rem] font-semibold text-white shadow-sm hover:bg-[#184282] disabled:opacity-60 sm:min-w-[200px]"
+                    className="min-h-11 rounded-md bg-[#1e4f9a] px-6 py-2.5 text-[0.95rem] font-semibold text-white shadow-sm hover:bg-[#184282] disabled:opacity-60 sm:min-w-[200px] sm:text-[0.98rem]"
                   >
                     {checkingEligibility ? "Checking..." : "Check Eligibility"}
                   </button>
                   <button
                     type="submit"
                     disabled={submitting || checkingEligibility}
-                    className="rounded-md bg-[#1e4f9a] px-6 py-2.5 text-[0.98rem] font-semibold text-white shadow-sm hover:bg-[#184282] disabled:opacity-60 sm:min-w-[260px]"
+                    className="min-h-11 rounded-md bg-[#1e4f9a] px-6 py-2.5 text-[0.95rem] font-semibold text-white shadow-sm hover:bg-[#184282] disabled:opacity-60 sm:min-w-[260px] sm:text-[0.98rem]"
                   >
                     {submitting ? "Validating..." : "Validate OTP and Submit Claim"}
                   </button>

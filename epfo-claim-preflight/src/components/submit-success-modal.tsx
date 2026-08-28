@@ -10,19 +10,21 @@ export function SubmitSuccessModal({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/45 px-4" role="dialog" aria-modal="true" aria-labelledby="submit-success-title">
-      <div className="relative w-full max-w-[420px] bg-white px-8 py-10 text-center shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-black/45 px-3 py-6 sm:px-4" role="dialog" aria-modal="true" aria-labelledby="submit-success-title">
+      <div className="relative w-full max-w-[420px] bg-white px-5 py-8 text-center shadow-[0_12px_40px_rgba(0,0,0,0.28)] sm:px-8 sm:py-10">
         <button
           type="button"
           aria-label="Close"
           onClick={onClose}
-          className="absolute right-3 top-3 rounded p-1 text-[#5b6573] hover:bg-slate-100 hover:text-[#222]"
+          className="absolute right-2 top-2 rounded p-2 text-[#5b6573] hover:bg-slate-100 hover:text-[#222] sm:right-3 sm:top-3"
         >
           <X size={20} strokeWidth={2.4} />
         </button>
-        <p id="submit-success-title" className="text-[1.15rem] font-medium text-[#222]">Online Claim Submitted Successfully.</p>
+        <p id="submit-success-title" className="px-6 text-[1.05rem] font-medium leading-snug text-[#222] sm:text-[1.15rem]">
+          Online Claim Submitted Successfully.
+        </p>
 
-        <div className="relative mx-auto mt-8 h-48 w-64">
+        <div className="relative mx-auto mt-6 h-36 w-52 sm:mt-8 sm:h-48 sm:w-64">
           <span className="absolute left-6 top-10 h-2.5 w-36 -rotate-[28deg] rounded-full bg-[#8ec8f0]" />
           <span className="absolute left-10 top-16 h-2.5 w-40 -rotate-[28deg] rounded-full bg-[#7ebfec]" />
           <span className="absolute left-16 top-24 h-2.5 w-28 -rotate-[28deg] rounded-full bg-[#9fd0f4]" />
@@ -38,7 +40,7 @@ export function SubmitSuccessModal({
         </div>
       </div>
 
-      <p className="mt-5 max-w-[720px] text-center text-[0.98rem] font-medium leading-6 text-[#2e9a3a]">
+      <p className="mt-4 max-w-[720px] px-1 text-center text-[0.9rem] font-medium leading-6 text-[#2e9a3a] sm:mt-5 sm:text-[0.98rem]">
         OTP has been verified, PF Advance Claim form submitted successfully on Unified Portal. Please{" "}
         <button type="button" onClick={onViewPdf} className="font-semibold text-[#1565c0] underline">
           CLICK HERE

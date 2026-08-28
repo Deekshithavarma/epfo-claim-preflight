@@ -66,7 +66,7 @@ function PreflightResultsPageContent() {
             <div className="space-y-3">
               {result.checks.map((check) => (
                 <article key={check.code} className="rounded-xl border border-slate-200 p-4">
-                  <div className="mb-2 flex items-center justify-between gap-3">
+                  <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                     <h3 className="font-semibold text-ink">{check.label}</h3>
                     <StatusPill status={check.status} />
                   </div>

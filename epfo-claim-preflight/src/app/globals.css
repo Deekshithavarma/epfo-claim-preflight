@@ -6,11 +6,19 @@
   color-scheme: light;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  min-width: 0;
+  overflow-x: hidden;
   background: #f4f7fb;
   color: #1c2e4a;
   font-family: "Arial", "Noto Sans", sans-serif;
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 button,
@@ -33,6 +41,7 @@ a {
 .gov-primary-btn {
   display: block;
   width: 100%;
+  min-height: 2.75rem;
   border-radius: 0.6rem;
   background: #0e8a8a;
   padding: 0.75rem 1rem;
@@ -60,15 +69,42 @@ a {
   color: #f0fcfb;
 }
 
+.gov-nav-menu {
+  display: none;
+  flex-direction: column;
+}
+
+.gov-nav-menu.is-open {
+  display: flex;
+}
+
 .gov-nav-link {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   align-items: center;
-  gap: 0.4rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.22);
-  padding: 0.8rem 1rem;
+  gap: 0.55rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.9rem 1rem;
   font-size: 1rem;
   font-weight: 700;
-  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .gov-nav-menu,
+  .gov-nav-menu.is-open {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .gov-nav-link {
+    width: auto;
+    flex-shrink: 0;
+    border-bottom: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 0.8rem 1rem;
+    white-space: nowrap;
+  }
 }
 
 .gov-nav-link:hover {
@@ -85,9 +121,14 @@ a {
 }
 
 .gov-mini-control {
+  display: inline-flex;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #d3dbe7;
   border-radius: 0.4rem;
-  padding: 0.35rem 0.5rem;
+  padding: 0.35rem 0.55rem;
   font-size: 0.8rem;
   font-weight: 700;
   color: #5f6774;
@@ -107,8 +148,9 @@ a {
 .gov-logo-wrap {
   display: grid;
   place-items: center;
-  height: 62px;
-  width: 62px;
+  height: 44px;
+  width: 44px;
+  flex-shrink: 0;
   border-radius: 9999px;
   border: 1px solid #c8d5ef;
   background: #ffffff;
@@ -117,8 +159,20 @@ a {
 }
 
 .gov-logo-image {
-  height: 56px;
-  width: 56px;
+  height: 40px;
+  width: 40px;
   object-fit: cover;
   border-radius: 9999px;
+}
+
+@media (min-width: 640px) {
+  .gov-logo-wrap {
+    height: 62px;
+    width: 62px;
+  }
+
+  .gov-logo-image {
+    height: 56px;
+    width: 56px;
+  }
 }
