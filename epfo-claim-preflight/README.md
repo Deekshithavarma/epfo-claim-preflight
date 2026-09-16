@@ -1,6 +1,10 @@
 # ClaimReady — EPFO Form 31 Preflight Demo
 
-A citizen-facing prototype of the EPFO Unified Portal **Online Services** flow. A member logs in (demo), fills PF Advance (Form 31), can run a **Check Eligibility** preflight, and can **Validate OTP and Submit Claim** to see a success popup. Everything uses synthetic data. Nothing talks to live EPFO systems.
+Unofficial prototype. Not affiliated with EPFO or the Government of India. Uses synthetic demo data only. It does not access live EPFO, UAN, Aadhaar, or bank systems.
+
+**Live demo:** [https://epfo-claim-preflight.vercel.app/](https://epfo-claim-preflight.vercel.app/)
+
+A citizen-facing prototype of the EPFO Unified Portal **Online Services** flow. A member logs in (demo), fills PF Advance (Form 31), can run a **Check Eligibility** preflight, and can **Validate OTP and Submit Claim** to see a success popup.
 
 ## How to run
 
